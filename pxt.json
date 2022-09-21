@@ -1,0 +1,30 @@
+{
+    "name": ":MOVE mini radio code1",
+    "description": "",
+    "dependencies": {
+        "core": "*",
+        "radio": "*",
+        "neopixel": "github:microsoft/pxt-neopixel#v0.3.2",
+        "microphone": "*"
+    },
+    "files": [
+        "main.blocks",
+        "main.ts",
+        "README.md"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "targetVersions": {
+        "branch": "v1.2.7",
+        "tag": "v1.2.7",
+        "commits": "https://github.com/Microsoft/pxt-microbit/commits/2aa8d0cec64fe20cfb15cb20318f12dcd8b66755",
+        "target": "5.0.12",
+        "pxt": "4.4.5",
+        "targetId": "microbit"
+    },
+    "supportedTargets": [
+        "microbit"
+    ],
+    "preferredEditor": "blocksprj"
+}

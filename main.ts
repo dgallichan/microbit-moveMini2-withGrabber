@@ -1,22 +1,22 @@
 radio.onReceivedValueDeprecated(function (name, value) {
-    if (name == "Roll") {
+    if (name == "Turn") {
         RawRoll = value
         MappedRoll = pins.map(
         RawRoll,
-        -90,
-        90,
+        -1000,
+        1000,
         0,
         180
         )
         RollLeft = MappedRoll
         RollRight = MappedRoll
     }
-    if (name == "Pitch") {
+    if (name == "Drive") {
         RawPitch = value
         MappedPitch = pins.map(
         RawPitch,
-        90,
-        -90,
+        1000,
+        -1000,
         0,
         180
         )
@@ -34,13 +34,13 @@ radio.onReceivedValueDeprecated(function (name, value) {
     }
     if (name == "Grabber") {
         RawGrabber = value
-        if (RawGrabber == -999) {
+        if (RawGrabber == -9999) {
             pins.digitalWritePin(DigitalPin.P0, 0)
         } else {
             MappedGrabber = pins.map(
             RawGrabber,
-            -90,
-            90,
+            0,
+            1000,
             0,
             180
             )
@@ -62,11 +62,11 @@ let MappedRoll = 0
 let RawRoll = 0
 radio.setGroup(1)
 basic.showLeds(`
-    . . . . .
+    # . . . #
     . # . # .
     . . # . .
     . # . # .
-    . . . . .
+    . # # # .
     `)
 basic.forever(function () {
     basic.pause(100)

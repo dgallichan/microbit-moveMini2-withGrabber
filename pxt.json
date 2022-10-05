@@ -1,5 +1,5 @@
 {
-    "name": ":MOVE mini radio code1",
+    "name": ":MOVE mini radio with grabber",
     "description": "",
     "dependencies": {
         "core": "*",

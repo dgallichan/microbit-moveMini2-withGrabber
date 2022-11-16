@@ -46,7 +46,7 @@ radio.onReceivedValueDeprecated(function (name, value) {
             180
             )
             // Again might need calibration - full range is 0 to 180
-            pins.servoWritePin(AnalogPin.P0, Math.constrain(MappedGrabber, 0, 140))
+            pins.servoWritePin(AnalogPin.P0, Math.constrain(MappedGrabber, 0, 100))
         }
     }
 })

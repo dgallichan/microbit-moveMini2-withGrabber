@@ -3,8 +3,8 @@ radio.onReceivedValueDeprecated(function (name, value) {
         RawRoll = value
         MappedRoll = pins.map(
         RawRoll,
-        -1000,
-        1000,
+        -90,
+        90,
         0,
         180
         )
@@ -15,10 +15,10 @@ radio.onReceivedValueDeprecated(function (name, value) {
         RawPitch = value
         MappedPitch = pins.map(
         RawPitch,
-        1000,
-        -1000,
-        0,
-        180
+        -90,
+        90,
+        180,
+        0
         )
         PitchLeft = MappedPitch
         PitchRight = 180 - MappedPitch
@@ -34,13 +34,13 @@ radio.onReceivedValueDeprecated(function (name, value) {
     }
     if (name == "Grabber") {
         RawGrabber = value
-        if (RawGrabber == -9999) {
+        if (RawGrabber == -999) {
             pins.digitalWritePin(DigitalPin.P0, 0)
         } else {
             MappedGrabber = pins.map(
             RawGrabber,
-            0,
-            1000,
+            -90,
+            90,
             0,
             180
             )
@@ -48,6 +48,39 @@ radio.onReceivedValueDeprecated(function (name, value) {
         }
     }
 })
+input.onButtonPressed(Button.AB, function () {
+    basic.showNumber(groupNumber)
+    makingChoice = true
+    while (makingChoice) {
+        basic.pause(200)
+        if (input.logoIsPressed()) {
+            makingChoice = false
+            if (groupNumber <= -1) {
+                groupNumber = groupNumber + 256
+            }
+            if (groupNumber >= 256) {
+                groupNumber = groupNumber - 256
+            }
+            radio.setGroup(groupNumber)
+            basic.showIcon(IconNames.Yes)
+            basic.pause(200)
+            basic.showLeds(`
+                # . . . #
+                . # . # .
+                . . # . .
+                . # . # .
+                . # # # .
+                `)
+        } else if (input.buttonIsPressed(Button.A)) {
+            groupNumber = groupNumber - 1
+            basic.showNumber(groupNumber)
+        } else if (input.buttonIsPressed(Button.B)) {
+            groupNumber = groupNumber + 1
+            basic.showNumber(groupNumber)
+        }
+    }
+})
+let makingChoice = false
 let MappedGrabber = 0
 let RawGrabber = 0
 let RightOutput = 0
@@ -60,7 +93,9 @@ let RollRight = 0
 let RollLeft = 0
 let MappedRoll = 0
 let RawRoll = 0
-radio.setGroup(1)
+let groupNumber = 0
+groupNumber = 254
+radio.setGroup(groupNumber)
 basic.showLeds(`
     # . . . #
     . # . # .
@@ -68,9 +103,6 @@ basic.showLeds(`
     . # . # .
     . # # # .
     `)
-basic.forever(function () {
-    basic.pause(100)
-})
 basic.forever(function () {
 	
 })

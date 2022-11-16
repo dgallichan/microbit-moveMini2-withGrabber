@@ -37,14 +37,16 @@ radio.onReceivedValueDeprecated(function (name, value) {
         if (RawGrabber == -999) {
             pins.digitalWritePin(DigitalPin.P0, 0)
         } else {
+            // Modify the mapping range to adapt to individual grabber/servo. Full range would be -90 to +90
             MappedGrabber = pins.map(
             RawGrabber,
-            -90,
+            -70,
             90,
             0,
             180
             )
-            pins.servoWritePin(AnalogPin.P0, MappedGrabber)
+            // Again might need calibration - full range is 0 to 180
+            pins.servoWritePin(AnalogPin.P0, Math.constrain(MappedGrabber, 0, 140))
         }
     }
 })

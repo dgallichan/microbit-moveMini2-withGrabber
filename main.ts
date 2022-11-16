@@ -94,7 +94,7 @@ let RollLeft = 0
 let MappedRoll = 0
 let RawRoll = 0
 let groupNumber = 0
-groupNumber = 254
+groupNumber = 253
 radio.setGroup(groupNumber)
 basic.showLeds(`
     # . . . #

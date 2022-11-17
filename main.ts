@@ -46,7 +46,7 @@ radio.onReceivedValueDeprecated(function (name, value) {
             180
             )
             // Again might need calibration - full range is 0 to 180
-            pins.servoWritePin(AnalogPin.P0, Math.constrain(MappedGrabber, 0, 100))
+            pins.servoWritePin(AnalogPin.P0, Math.constrain(MappedGrabber, 0, 90))
         }
     }
 })
@@ -96,7 +96,7 @@ let RollLeft = 0
 let MappedRoll = 0
 let RawRoll = 0
 let groupNumber = 0
-groupNumber = 253
+groupNumber = 252
 radio.setGroup(groupNumber)
 basic.showLeds(`
     # . . . #

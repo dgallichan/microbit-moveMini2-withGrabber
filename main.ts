@@ -1,33 +1,43 @@
 radio.onReceivedValueDeprecated(function (name, value) {
     if (name == "Turn") {
-        RawRoll = value
-        MappedRoll = pins.map(
-        RawRoll,
+        rawTurn = value
+        mappedTurn = pins.map(
+        rawTurn,
         -90,
         90,
         0,
         180
         )
-        RollLeft = MappedRoll
-        RollRight = MappedRoll
-    }
-    if (name == "Drive") {
-        RawPitch = value
-        MappedPitch = pins.map(
-        RawPitch,
+        turnLeft = mappedTurn
+        turnRight = mappedTurn
+        LeftOutput = (driveLeft + turnLeft) / 2
+        RightOutput = (driveRight + turnRight) / 2
+    } else if (name == "Drive") {
+        rawDrive = value
+        mappedDrive = pins.map(
+        rawDrive,
         -90,
         90,
         180,
         0
         )
-        PitchLeft = MappedPitch
-        PitchRight = 180 - MappedPitch
+        driveLeft = mappedDrive
+        driveRight = 180 - mappedDrive
+        LeftOutput = (driveLeft + turnLeft) / 2
+        RightOutput = (driveRight + turnRight) / 2
+    } else if (name == "Lmotor") {
+        LeftOutput = Math.constrain(value, 0, 180)
+    } else if (name == "Rmotor") {
+        RightOutput = Math.constrain(value, 0, 180)
     }
-    LeftOutput = (PitchLeft + RollLeft) / 2
-    RightOutput = (PitchRight + RollRight) / 2
-    if (RawPitch == 0 && RawRoll == 0) {
-        pins.digitalWritePin(DigitalPin.P1, 0)
-        pins.digitalWritePin(DigitalPin.P2, 0)
+    if (rawDrive == 0 && rawTurn == 0) {
+        if (name == "Lmotor" || name == "Rmotor") {
+            pins.servoWritePin(AnalogPin.P1, LeftOutput)
+            pins.servoWritePin(AnalogPin.P2, RightOutput)
+        } else {
+            pins.digitalWritePin(DigitalPin.P1, 0)
+            pins.digitalWritePin(DigitalPin.P2, 0)
+        }
     } else {
         pins.servoWritePin(AnalogPin.P1, LeftOutput)
         pins.servoWritePin(AnalogPin.P2, RightOutput)
@@ -85,18 +95,18 @@ input.onButtonPressed(Button.AB, function () {
 let makingChoice = false
 let MappedGrabber = 0
 let RawGrabber = 0
+let mappedDrive = 0
+let rawDrive = 0
+let driveRight = 0
 let RightOutput = 0
+let driveLeft = 0
 let LeftOutput = 0
-let PitchRight = 0
-let PitchLeft = 0
-let MappedPitch = 0
-let RawPitch = 0
-let RollRight = 0
-let RollLeft = 0
-let MappedRoll = 0
-let RawRoll = 0
+let turnRight = 0
+let turnLeft = 0
+let mappedTurn = 0
+let rawTurn = 0
 let groupNumber = 0
-groupNumber = 252
+groupNumber = 254
 radio.setGroup(groupNumber)
 basic.showLeds(`
     # . . . #

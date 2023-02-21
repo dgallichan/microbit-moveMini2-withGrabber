@@ -1,6 +1,6 @@
 radio.onReceivedValueDeprecated(function (name, value) {
     if (name == "Turn") {
-        rawTurn = value
+        rawTurn = turnPower * value
         mappedTurn = pins.map(
         rawTurn,
         -90,
@@ -13,7 +13,7 @@ radio.onReceivedValueDeprecated(function (name, value) {
         LeftOutput = (driveLeft + turnLeft) / 2
         RightOutput = (driveRight + turnRight) / 2
     } else if (name == "Drive") {
-        rawDrive = value
+        rawDrive = drivePower * value
         mappedDrive = pins.map(
         rawDrive,
         -90,
@@ -26,9 +26,9 @@ radio.onReceivedValueDeprecated(function (name, value) {
         LeftOutput = (driveLeft + turnLeft) / 2
         RightOutput = (driveRight + turnRight) / 2
     } else if (name == "Lmotor") {
-        LeftOutput = Math.constrain(value, 0, 180)
+        LeftOutput = value
     } else if (name == "Rmotor") {
-        RightOutput = Math.constrain(value, 0, 180)
+        RightOutput = value
     }
     if (rawDrive == 0 && rawTurn == 0) {
         if (name == "Lmotor" || name == "Rmotor") {
@@ -39,8 +39,8 @@ radio.onReceivedValueDeprecated(function (name, value) {
             pins.digitalWritePin(DigitalPin.P2, 0)
         }
     } else {
-        pins.servoWritePin(AnalogPin.P1, LeftOutput)
-        pins.servoWritePin(AnalogPin.P2, RightOutput)
+        pins.servoWritePin(AnalogPin.P1, Math.constrain(LeftOutput, 0, 180))
+        pins.servoWritePin(AnalogPin.P2, Math.constrain(RightOutput, 0, 180))
     }
     if (name == "Grabber") {
         RawGrabber = value
@@ -105,6 +105,8 @@ let turnRight = 0
 let turnLeft = 0
 let mappedTurn = 0
 let rawTurn = 0
+let turnPower = 0
+let drivePower = 0
 let groupNumber = 0
 groupNumber = 254
 radio.setGroup(groupNumber)
@@ -115,6 +117,8 @@ basic.showLeds(`
     . # . # .
     . # # # .
     `)
+drivePower = 1
+turnPower = 1
 basic.forever(function () {
 	
 })
